@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .services import valid_request
 from .models import Robot
 
-# Create your views here.
+
 @csrf_exempt
 def new_robot_record(request: HttpRequest):
     if request.method == 'POST':
@@ -21,7 +21,6 @@ def new_robot_record(request: HttpRequest):
             else:
                 return JsonResponse({'status': 'error',
                                      'detail': 'object already exists'})
-            
         else:
             return JsonResponse({'status': 'error',
                                 'detail': data})
