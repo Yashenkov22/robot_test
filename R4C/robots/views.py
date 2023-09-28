@@ -9,8 +9,10 @@ from .services import valid_request, make_excel_file
 from .models import Robot
 
 
+#Page with link to download excel file
 def index(request):
     return render(request, 'robots/download.html')
+
 
 #Add new record to database
 @require_POST
@@ -22,16 +24,16 @@ def new_robot_record(request: HttpRequest):
 
         Robot.objects.create(**data)
         return JsonResponse({'status': 'success',
-                            'detail': 'object has been created'})
+                             'detail': 'object has been created'})
         
     else:
         return JsonResponse({'status': 'error',
-                            'detail': data})
+                             'detail': data})
 
 
 def download_excel(request):
-    models = Robot.objects.values_list('model').distinct()
-    make_excel_file(models)
+
+    make_excel_file()
 
     with open('output.xlsx', 'rb') as f:
         response = HttpResponse(f, content_type='application/force-download')
