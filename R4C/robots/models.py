@@ -30,7 +30,5 @@ def send_email_to_customers(sender, instance, created, **kwargs):
                                         model,
                                         version)
             
-            #Switch 'is_wait' attribute on False for each order
-            for order in list_orders:
-                order.is_wait = False
-                order.save()
+            #Delete orders waiting this robot
+            list_orders.delete()
