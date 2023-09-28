@@ -1,5 +1,4 @@
 from django.http import HttpRequest, JsonResponse
-from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
@@ -14,15 +13,9 @@ def new_robot_record(request: HttpRequest):
 
     if isinstance(data, dict):
 
-        try:
-            Robot.objects.get(serial=data['serial'])
-        except ObjectDoesNotExist:
-            Robot.objects.create(**data)
-            return JsonResponse({'status': 'success',
-                                'detail': 'object has been created'})
-        else:
-            return JsonResponse({'status': 'error',
-                                 'detail': 'object already exists'})
+        Robot.objects.create(**data)
+        return JsonResponse({'status': 'success',
+                            'detail': 'object has been created'})
         
     else:
         return JsonResponse({'status': 'error',
